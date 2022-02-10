@@ -102,8 +102,30 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function(guest_id, limit = 10) {
-  return getAllProperties(null, 2);
-}
+  // return getAllProperties(null, 2);
+  return pool 
+      .query(`SELECT properties.*, reservations.*, AVG(rating) as rating
+      FROM reservations 
+      JOIN properties ON properties.id = reservations.property_id
+      JOIN property_reviews ON properties.id = property_reviews.property_id
+      WHERE reservations.guest_id = $1 
+      AND reservations.end_date < now()::date
+      GROUP BY properties.id, reservations.id
+      ORDER BY reservations.start_date 
+      limit $2;`,[guest_id, limit]).then((res) => {
+        console.log("getReservations ran");
+        // console.log(`guest_id = ${guest_id}, limit  = ${limit}`);
+        // console.log(`res.rows = `,res.rows);
+        return res.rows
+      })
+      .catch((err) => {
+        console.log('Res-error: ', err.message);
+      });
+};
+// getAllReservations().then(data => {
+//   console.log("got reservations data");
+// })
+
 exports.getAllReservations = getAllReservations;
 
 /// Properties
@@ -124,11 +146,11 @@ exports.getAllReservations = getAllReservations;
 const getAllProperties = (options, limit = 10) => {
   return pool //by returning the entire promise chain we are returning a promise that will reslt in res.rows
       .query(`SELECT * FROM properties LIMIT $1`,[limit]).then((res) => {
-        console.log("something ran");
+        console.log("getProperties ran");
         return res.rows;
       })
       .catch((err) => {
-        console.log('error: ', err.message);
+        console.log('Prop-error: ', err.message);
       });
     };  
     getAllProperties().then(data => {
