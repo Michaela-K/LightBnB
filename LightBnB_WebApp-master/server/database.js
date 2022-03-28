@@ -7,9 +7,6 @@ const pool = new Pool({
   database: "lightbnb",
 });
 
-const properties = require("./json/properties.json");
-const users = require("./json/users.json");
-
 /// Users
 
 /**
@@ -18,17 +15,6 @@ const users = require("./json/users.json");
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithEmail = function (email) {
-  //   let user;
-  //   for (const userId in users) {
-  //     user = users[userId];
-  //     if (user.email.toLowerCase() === email.toLowerCase()) {
-  //       break;
-  //     } else {
-  //       user = null;
-  //     }
-  //   }
-  //   return Promise.resolve(user);
-  // }
   return pool
     .query(
       ` SELECT *
@@ -55,7 +41,6 @@ exports.getUserWithEmail = getUserWithEmail;
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function (id) {
-  // return Promise.resolve(users[id]);
   return pool
     .query(
       ` SELECT * FROM users
@@ -83,10 +68,6 @@ exports.getUserWithId = getUserWithId;
  * @return {Promise<{}>} A promise to the user.
  */
 const addUser = function (user) {
-  // const userId = Object.keys(users).length + 1;
-  // user.id = userId;
-  // users[userId] = user;
-  // return Promise.resolve(user);
   return pool
     .query(
       ` INSERT INTO users (name, email, password)
@@ -100,7 +81,6 @@ const addUser = function (user) {
     });
 };
 exports.addUser = addUser;
-//Add RETURNING *; to the end of an INSERT query to return the objects that were inserted. This is handy when you need the auto generated id of an object you've just added to the database.
 
 /// Reservations
 
@@ -110,7 +90,6 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function (guest_id, limit = 10) {
-  // return getAllProperties(null, 2);
   return pool
     .query(
       `SELECT properties.*, reservations.*, AVG(property_reviews.rating) as average_rating
@@ -126,17 +105,12 @@ const getAllReservations = function (guest_id, limit = 10) {
     )
     .then((res) => {
       console.log("getReservations ran");
-      // console.log(`guest_id = ${guest_id}, limit  = ${limit}`);
-      // console.log(`res.rows = `,res.rows);
       return res.rows;
     })
     .catch((err) => {
       console.log("Res-error: ", err.message);
     });
 };
-// getAllReservations().then(data => {
-//   console.log("got reservations data");
-// })
 
 exports.getAllReservations = getAllReservations;
 
@@ -148,22 +122,14 @@ exports.getAllReservations = getAllReservations;
  * @param {*} limit The number of results to return.
  * @return {Promise<[{}]>}  A promise to the properties.
  */
-// const getAllProperties = function(options, limit = 10) {
-//   const limitedProperties = {};
-//   for (let i = 1; i <= limit; i++) {
-//     limitedProperties[i] = properties[i];
-//   }
-//   return Promise.resolve(limitedProperties);
-// }
+
 const getAllProperties = (options, limit = 10) => {
-  // 1 Setup an array to hold any parameters that may be available for the query
   const queryParams = [];
   let queryString = `
   SELECT properties.*, avg(property_reviews.rating) as average_rating
   FROM properties
   JOIN property_reviews ON properties.id = property_id
   `;
-  //Check if a city has been passed in as an option. Add the city to the params
   if (options.city) {
     queryParams.push(`%${options.city}%`);
     queryString += `WHERE city LIKE $${queryParams.length} `;
@@ -213,17 +179,7 @@ const getAllProperties = (options, limit = 10) => {
     .catch((err) => {
       console.log("Prop-error: ", err.message);
     });
-  // return pool //by returning the entire promise chain we are returning a promise that will reslt in res.rows
-  //     .query(`SELECT * FROM properties LIMIT $1`,[limit]).then((res) => {
-  //       console.log("getProperties ran");
-  //       return res.rows;
-  //     })
-  //     .catch((err) => {
-  //       console.log('Prop-error: ', err.message);
-  //     });
-  //   };
-  //   getAllProperties().then(data => {
-  //     console.log("got properties data");
+  
 };
 exports.getAllProperties = getAllProperties;
 
@@ -233,10 +189,6 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function (property) {
-  // const propertyId = Object.keys(properties).length + 1;
-  // property.id = propertyId;
-  // properties[propertyId] = property;
-  // return Promise.resolve(property);
   return pool
     .query(
       ` INSERT INTO properties ( 

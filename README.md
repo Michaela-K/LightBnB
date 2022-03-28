@@ -1,7 +1,7 @@
 # LightBnB
+This is a basic AirBnB clone called LightBnb which I completed at LightHouse labs Bootcamp to focus on learning how to connect to and query the database using the user's input data.
 
 ## Project Structure
-
 ```
 ├── public
 │   ├── index.html
@@ -41,3 +41,20 @@
   * `apiRoutes.js` and `userRoutes.js` are responsible for any HTTP requests to `/users/something` or `/api/something`. 
   * `json` is a directory that contains a bunch of dummy data in `.json` files.
   * `database.js` is responsible for all queries to the database. It doesn't currently connect to any database, all it does is return data from `.json` files.
+
+## Getting Started
+  1. Clone this repository
+  2. Install the dependencies listed below using npm install
+  3. ```cd LightBnB_WebApp-master```
+  4. start the web server using ```npm run local```
+  5. Go to http://localhost:3000/ in your browser
+  6. Login with email: makaylahahn@gmail.com Password: password
+  (You will be logged in with the name Austin Beck in the nav)
+
+## Dependencies
+- bcrypt
+- bodyparser
+- cookie-session
+- express
+- nodemon
+- pg
