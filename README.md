@@ -3,6 +3,8 @@ This is a basic AirBnB clone called LightBnb which I completed at LightHouse lab
 
 ## Project Structure
 ```
+├── db
+│   ├── index.js
 ├── public
 │   ├── index.html
 │   ├── javascript
@@ -20,14 +22,14 @@ This is a basic AirBnB clone called LightBnb which I completed at LightHouse lab
 │   │   └── views_manager.js
 │   └── styles
 ├── sass
-└── server
-  ├── apiRoutes.js
-  ├── database.js
-  ├── json
-  ├── server.js
-  └── userRoutes.js
+├── server
+│   ├── apiRoutes.js
+│   ├── database.js
+│   ├── json
+│   └── userRoutes.js
+└── app.js
 ```
-
+* `db` contains the database connaction
 * `public` contains all of the HTML, CSS, and client side JavaScript. 
   * `index.html` is the entry point to the application. It's the only html page because this is a single page application.
   * `javascript` contains all of the client side javascript files.
@@ -37,10 +39,11 @@ This is a basic AirBnB clone called LightBnb which I completed at LightHouse lab
     * `components` contains all of the individual html components. They are all created using jQuery.
 * `sass` contains all of the sass files. 
 * `server` contains all of the server side and database code.
-  * `server.js` is the entry point to the application. This connects the routes to the database.
+  <!-- * `server.js` is the entry point to the application. This connects the routes to the database. -->
   * `apiRoutes.js` and `userRoutes.js` are responsible for any HTTP requests to `/users/something` or `/api/something`. 
   * `json` is a directory that contains a bunch of dummy data in `.json` files.
   * `database.js` is responsible for all queries to the database. It doesn't currently connect to any database, all it does is return data from `.json` files.
+  * `app.js` is the entry point to the application. This connects the routes to the database.
 
 ## Getting Started
   1. Clone this repository
