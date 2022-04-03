@@ -28,9 +28,9 @@ const userRouter = express.Router();
 userRoutes(userRouter, database);
 app.use('/users', userRouter);
 
-app.use(express.static(path.join(__dirname, './public')));  //default route
+app.use(express.static(path.join(__dirname, './public')));
 
-app.get("*", (req, res) => {  //* - any url that doesnt match
+app.get("*", (req, res) => { 
   res.send("404 Not Found :)");
 });
 
