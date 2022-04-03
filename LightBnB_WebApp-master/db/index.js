@@ -8,7 +8,7 @@ const pool = new Pool({
 });
 
 module.exports = {
-  query: (text, params) => {
+  query: (text, params) => {  //text - actual query text
     const start = Date.now()
     return pool
     .query(text, params) 

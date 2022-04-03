@@ -1,6 +1,6 @@
-const database = require('./database');
-const apiRoutes = require('./apiRoutes');
-const userRoutes = require('./userRoutes');
+const database = require('./server/database');
+const apiRoutes = require('./server/apiRoutes');
+const userRoutes = require('./server/userRoutes');
 
 const path = require('path');
 
@@ -28,11 +28,11 @@ const userRouter = express.Router();
 userRoutes(userRouter, database);
 app.use('/users', userRouter);
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, './public')));  //default route
 
-app.get("/test", (req, res) => {
-  res.send("🤗");
+app.get("*", (req, res) => {  //* - any url that doesnt match
+  res.send("404 Not Found :)");
 });
 
-const port = process.env.PORT || 3000; 
+const port = process.env.PORT || 3001; 
 app.listen(port, (err) => console.log(err || `listening on port ${port} 😎`));
