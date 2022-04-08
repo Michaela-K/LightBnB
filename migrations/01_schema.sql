@@ -1,6 +1,5 @@
 -- CREATE DATABASE lightbnb;
 -- \c lightbnb
--- \d lighbnb ? - is for what output?
 -- \i migrations/01_schema.sql
 -- Define the tables in order of least dependent to most dependent. - least FK to Most
 DROP TABLE IF EXISTS users CASCADE;

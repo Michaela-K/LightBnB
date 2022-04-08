@@ -30,6 +30,7 @@ app.use('/users', userRouter);
 
 app.use(express.static(path.join(__dirname, './public')));
 
+// 404 Not Found Page
 app.get("*", (req, res) => { 
   res.send("404 Not Found :)");
 });

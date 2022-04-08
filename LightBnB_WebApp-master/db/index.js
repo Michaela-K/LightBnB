@@ -1,5 +1,5 @@
 const { Pool } = require("pg");
-
+//db connection
 const pool = new Pool({
   user: "vagrant",
   password: "123",

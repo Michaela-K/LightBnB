@@ -1,15 +1,6 @@
 const pool = require('../db/index');
-// const { Pool } = require("pg");
-
-// const pool = new Pool({
-//   user: "vagrant",
-//   password: "123",
-//   host: "localhost",
-//   database: "lightbnb",
-// });
 
 /// Users
-
 /**
  * Get a single user from the database given their email.
  * @param {String} email The email of the user.
