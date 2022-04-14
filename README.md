@@ -35,9 +35,9 @@ Desktop View showing the Reservations Page
 │   └── userRoutes.js
 └── app.js
 ```
-* `db` contains the database connaction
+* `db` contains the database connection
 * `public` contains all of the HTML, CSS, and client side JavaScript. 
-  * `index.html` is the entry point to the application. It's the only html page because this is a single page application.
+  * `index.html` is the entry point to the application. 
   * `javascript` contains all of the client side javascript files.
     * `index.js` starts up the application by rendering the listings.
     * `network.js` manages all ajax requests to the server.
@@ -45,25 +45,13 @@ Desktop View showing the Reservations Page
     * `components` contains all of the individual html components. They are all created using jQuery.
 * `sass` contains all of the sass files. 
 * `server` contains all of the server side and database code.
-  <!-- * `server.js` is the entry point to the application. This connects the routes to the database. -->
   * `apiRoutes.js` and `userRoutes.js` are responsible for any HTTP requests to `/users/something` or `/api/something`. 
   * `json` is a directory that contains a bunch of dummy data in `.json` files.
-  * `database.js` is responsible for all queries to the database. It doesn't currently connect to any database, all it does is return data from `.json` files.
+  * `database.js` is responsible for all queries to the database.
   * `app.js` is the entry point to the application. This connects the routes to the database.
 
 ## Getting Started
-  1. Clone this repository & open to the folder "LightBnB_WebApp-master"
-  2. Install the dependencies listed below using npm install
-  3. ```cd LightBnB_WebApp-master```
-  4. start the web server using ```npm start```
-  5. Go to http://localhost:3000/ in your browser
-  6. You can Login with email: makaylahahn@ymail.com Password: password
-  (You will be logged in with the name Austin Beck in the nav)
-
-## Dependencies
-- bcrypt
-- bodyparser
-- cookie-session
-- express
-- nodemon
-- pg
+  1. Clone this repository & ```cd LightBnB_WebApp-master```
+  2. run npm install
+  3. start the web server using ```npm start```
+  4. Go to http://localhost:3000/ in your browser

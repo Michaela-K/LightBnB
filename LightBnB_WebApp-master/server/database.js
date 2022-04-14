@@ -1,10 +1,9 @@
 const pool = require('../db/index');
 
-/// Users
 /**
  * Get a single user from the database given their email.
  * @param {String} email The email of the user.
- * @return {Promise<{}>} A promise to the user.
+ * @return {Promise<{}>} returns user Object.
  */
 const getUserWithEmail = function (email) {
   return pool
@@ -30,7 +29,7 @@ exports.getUserWithEmail = getUserWithEmail;
 /**
  * Get a single user from the database given their id.
  * @param {string} id The id of the user.
- * @return {Promise<{}>} A promise to the user.
+ * @return {Promise<{}>} returns user Object.
  */
 const getUserWithId = function (id) {
   return pool
@@ -57,7 +56,7 @@ exports.getUserWithId = getUserWithId;
 /**
  * Add a new user to the database.
  * @param {{name: string, password: string, email: string}} user
- * @return {Promise<{}>} A promise to the user.
+ * @return {Promise<{}>} registered user Object.
  */
 const addUser = function (user) {
   return pool
@@ -67,7 +66,7 @@ const addUser = function (user) {
       ;`,
       [user.name, user.email, user.password]
     )
-    .then((res) => res.rows, console.log("addUser .then ran"))
+    .then((res) => res.rows)
     .catch((err) => {
       console.log(err.message);
     });
@@ -79,7 +78,8 @@ exports.addUser = addUser;
 /**
  * Get all reservations for a single user.
  * @param {string} guest_id The id of the user.
- * @return {Promise<[{}]>} A promise to the reservations.
+ * @param {number} limit The number of results to return.
+ * @return {Promise<[{}]>} returns array of reservations for guests.
  */
 const getAllReservations = function (guest_id, limit = 10) {
   return pool
@@ -91,12 +91,11 @@ const getAllReservations = function (guest_id, limit = 10) {
       WHERE reservations.guest_id = $1 
       AND reservations.end_date < now()::date
       GROUP BY properties.id, reservations.id
-      ORDER BY reservations.start_date 
+      ORDER BY reservations.start_date
       limit $2;`,
       [guest_id, limit]
     )
     .then((res) => {
-      console.log("getReservations ran");
       return res.rows;
     })
     .catch((err) => {
@@ -111,8 +110,8 @@ exports.getAllReservations = getAllReservations;
 /**
  * Get all properties.
  * @param {{}} options An object containing query options.
- * @param {*} limit The number of results to return.
- * @return {Promise<[{}]>}  A promise to the properties.
+ * @param {number} limit The number of results to return.
+ * @return {Promise<[{}]>}  returns properties.
  */
 
 const getAllProperties = (options, limit = 10) => {
@@ -167,7 +166,7 @@ const getAllProperties = (options, limit = 10) => {
 
   return pool
     .query(queryString, queryParams)
-    .then((res) => res.rows, console.log("getProperties ran"), console.log(queryString))
+    .then((res) => res.rows)
     .catch((err) => {
       console.log("Prop-error: ", err.message);
     });
@@ -178,7 +177,7 @@ exports.getAllProperties = getAllProperties;
 /**
  * Add a property to the database
  * @param {{}} property An object containing all of the property details.
- * @return {Promise<{}>} A promise to the property.
+ * @return {Promise<{}>} added property Object.
  */
 const addProperty = function (property) {
   return pool
@@ -203,7 +202,7 @@ const addProperty = function (property) {
       ;`,
       [property.owner_id, property.title, property.description, property.thumbnail_photo_url, property.cover_photo_url, property.cost_per_night, property.street, property.city, property.province, property.post_code, property.country, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms]
     )
-    .then((res) => res.rows, console.log("addProperty ran"))
+    .then((res) => res.rows)
     .catch((err) => {
       console.log("Add Prop Error:", err.message);
     });
